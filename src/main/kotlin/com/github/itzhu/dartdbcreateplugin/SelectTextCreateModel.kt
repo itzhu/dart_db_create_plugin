@@ -2,14 +2,9 @@ package com.github.itzhu.dartdbcreateplugin
 
 import com.github.itzhu.dartdbcreateplugin.tablecreator.Creator
 import com.intellij.openapi.actionSystem.AnAction
-import com.intellij.notification.NotificationGroupManager
 import com.intellij.openapi.actionSystem.AnActionEvent
-import com.intellij.notification.NotificationType
-import com.intellij.notification.Notifications
 import com.intellij.openapi.actionSystem.PlatformDataKeys
 import com.intellij.openapi.ui.Messages
-import java.io.File
-import kotlin.concurrent.thread
 
 
 /**根据dart文件生成数据库配置文件*/

@@ -38,9 +38,8 @@ object FileUtil {
      */
     @JvmStatic
     fun copyFile(inputStream: InputStream, outFile: File) {
-        val fos = FileOutputStream(outFile)
         val bis = BufferedInputStream(inputStream)
-        val bos = BufferedOutputStream(fos)
+        val bos = BufferedOutputStream(FileOutputStream(outFile))
         val buf = ByteArray(1024)
         try {
             var len = 0
@@ -54,13 +53,12 @@ object FileUtil {
             e.printStackTrace()
         } finally {
             try {
-                inputStream.close()
-                fos.close()
+                bos.close()
+                bis.close()
             } catch (e: java.lang.Exception) {
                 e.printStackTrace()
             }
         }
-
     }
 
 

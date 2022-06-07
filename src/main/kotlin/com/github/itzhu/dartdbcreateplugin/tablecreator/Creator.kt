@@ -45,19 +45,17 @@ object Creator {
         val outDir = File(projectPath, "/lib/dbcreate/common/db")
         if (outDir.exists()) return
         outDir.mkdirs()
-        val pathDir = "/commondb/db/"
         val filePathList = listOf(
-            "${pathDir}base_db.dart",
-            "${pathDir}db_table.dart",
-            "${pathDir}db_util.dart",
-            "${pathDir}base_table.dart",
+            "base_db.dart",
+            "base_table.dart",
+            "db_table.dart",
+            "db_util.dart",
         )
 
-        for (path in filePathList) {
-            val file = javaClass.classLoader.getResource(path)
-            val first = path.indexOf(pathDir)
-            val outFile = File(outDir, path.substring(first + pathDir.length, path.length))
-            FileUtil.copyFile(file.openStream(), outFile)
+        for (name in filePathList) {
+            val outFile = File(outDir, name)
+            outFile.createNewFile()
+            FileUtil.copyFile(javaClass.classLoader.getResourceAsStream(name), outFile)
         }
     }
 

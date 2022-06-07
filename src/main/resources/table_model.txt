@@ -1,0 +1,44 @@
+import '../common/db/base_table.dart';
+import '../common/db/db_table.dart';
+
+import "{--dartFilePath--}";
+
+class {--className--}Table extends BaseTable<{--className--}> {
+
+  static const String TB_NAME = "{--tableName--}";
+
+	  {--columnList--}
+
+  static String createTableSql() {
+    return DbTable.createTable(
+        TB_NAME,
+        [
+          {--tabSql--}
+        ],
+        primaryKey: ID,
+        autoIncrement: true);
+  }
+
+  @override
+  String getIdKey() => ID;
+
+  @override
+  String? getIdValue2String({--className--} data) => data.{--idStr--};
+
+  @override
+  String getTableName() => TB_NAME;
+
+  @override
+  {--className--} mapTo(Map<String, Object?> map) {
+    {--className--} data = {--className--}();
+		{--mapTo--}
+    return data;
+  }
+
+  @override
+  Map<String, Object?> toMap({--className--} data) {
+    return <String, Object?>{
+		{--toMap--}
+    };
+  }
+}

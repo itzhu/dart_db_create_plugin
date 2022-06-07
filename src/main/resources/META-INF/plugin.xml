@@ -1,18 +1,19 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
+    <!-- 插件的id，不能重复，必须唯一-->
     <id>com.github.itzhu.dartdbcreateplugin</id>
-    <name>dart_db_create_plugin</name>
-    <vendor>itzhu</vendor>
+    <!-- 插件的名字-->
+    <name>Dart Database Table Creator</name>
+    <!-- 插件的版本 -->
+    <version>1.0.0</version>
+    <!-- 作者信息(和生成的不同即可) -->
+    <vendor>itzhu@foxmail.com</vendor>
 
-    <depends>com.intellij.modules.platform</depends>
+    <actions>
+        <action id="SelectTextCreateModelID" class="com.github.itzhu.dartdbcreateplugin.SelectTextCreateModel"
+                text="CreateDBTable" description="生成数据库Table表操作文件">
+            <add-to-group group-id="EditorPopupMenu" anchor="first"/>
+        </action>
+    </actions>
 
-    <extensions defaultExtensionNs="com.intellij">
-        <applicationService serviceImplementation="com.github.itzhu.dartdbcreateplugin.services.MyApplicationService"/>
-        <projectService serviceImplementation="com.github.itzhu.dartdbcreateplugin.services.MyProjectService"/>
-    </extensions>
-
-    <applicationListeners>
-        <listener class="com.github.itzhu.dartdbcreateplugin.listeners.MyProjectManagerListener"
-                  topic="com.intellij.openapi.project.ProjectManagerListener"/>
-    </applicationListeners>
 </idea-plugin>

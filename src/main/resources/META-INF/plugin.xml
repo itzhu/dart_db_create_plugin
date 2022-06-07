@@ -3,7 +3,7 @@
     <!-- 插件的id，不能重复，必须唯一-->
     <id>com.github.itzhu.dartdbcreateplugin</id>
     <!-- 插件的名字-->
-    <name>Dart Database Table Creator</name>
+    <name>DartDBTableCreator</name>
     <!-- 插件的版本 -->
     <version>1.0.0</version>
     <!-- 作者信息(和生成的不同即可) -->

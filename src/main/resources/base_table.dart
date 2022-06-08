@@ -7,7 +7,6 @@ import 'package:sqflite/sqflite.dart';
 ///@author: create by  itzhu |  2022/6/7
 ///@desc  :
 abstract class BaseTable<T> {
-
   String getTableName();
 
   String getIdKey();
@@ -19,28 +18,33 @@ abstract class BaseTable<T> {
   T mapTo(Map<String, Object?> map);
 
   ///根据id去判断，插入新数据或更新数据
-  Future<int> save(T data, {Database? db}) async {
+  ///return pair:
+  ///first=1 update;
+  ///first=2 insert;
+  Future<Pair<int, int>> save(T data, {Database? db}) async {
     db ??= await DBUtil.openDb();
     var idStr = getIdValue2String(data);
     if (!DBUtil.isNullOrEmpty(idStr)) {
       if (await DBUtil.columnEquals(db, getTableName(), getIdKey(), idStr!)) {
-        return db.update(getTableName(), toMap(data), where: "${getIdKey()}=$idStr");
+        var count = await db.update(getTableName(), toMap(data), where: "${getIdKey()}=$idStr");
+        return Pair(1, count);
       }
     }
-    return db.insert(getTableName(), toMap(data), conflictAlgorithm: ConflictAlgorithm.replace);
+    var id = await db.insert(getTableName(), toMap(data), conflictAlgorithm: ConflictAlgorithm.replace);
+    return Pair(2, id);
   }
 
   Future<List<T>> find(
       {Database? db,
-      bool? distinct,
-      List<String>? columns,
-      String? where,
-      List<Object?>? whereArgs,
-      String? groupBy,
-      String? having,
-      String? orderBy,
-      int? limit,
-      int? offset}) async {
+        bool? distinct,
+        List<String>? columns,
+        String? where,
+        List<Object?>? whereArgs,
+        String? groupBy,
+        String? having,
+        String? orderBy,
+        int? limit,
+        int? offset}) async {
     db ??= await DBUtil.openDb();
     List<T> dataList = [];
     var list = await db.query(getTableName(),
@@ -71,4 +75,11 @@ abstract class BaseTable<T> {
       return Future.value(null);
     }
   }
+}
+
+class Pair<T, D> {
+  T first;
+  D second;
+
+  Pair(this.first, this.second);
 }

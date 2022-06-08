@@ -9,9 +9,16 @@
     <!-- 作者信息(和生成的不同即可) -->
     <vendor>itzhu@foxmail.com</vendor>
 
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+    </extensions>
+
     <actions>
-        <action id="SelectTextCreateModelID" class="com.github.itzhu.dartdbcreateplugin.SelectTextCreateModel"
-                text="CreateDBTable" description="生成数据库Table表操作文件">
+        <action id="SelectTextCreateModelID"
+                class="com.github.itzhu.dartdbcreateplugin.SelectTextCreateModel"
+                text="CreateDBTable"
+                description="生成数据库Table表操作文件">
             <add-to-group group-id="EditorPopupMenu" anchor="first"/>
         </action>
     </actions>

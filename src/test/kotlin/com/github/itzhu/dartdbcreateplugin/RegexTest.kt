@@ -1,6 +1,6 @@
 package com.github.itzhu.dartdbcreateplugin
 
-import ColumnInfo
+import com.github.itzhu.dartdbcreateplugin.tablecreator.ColumnInfo
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
@@ -8,7 +8,7 @@ import java.util.regex.Pattern
 /**String name = "a";*/
 const val VARARGS_REGEX2 = """^\s*(String|int|double)\s*(\??)\s+(\w+)\s*((=\s*((\S+))\s*)?);.*${'$'}"""
  val pattern = Pattern.compile(VARARGS_REGEX2)
-fun main(vararg cmd: String) {
+fun main() {
 
     var list = listOf(
         """  String name = "tony";  """,
@@ -28,7 +28,7 @@ fun main(vararg cmd: String) {
         val find = matcher.find()
         if (!find) continue
         //分组个数是‘(’的个数
-        val gpCount = matcher.groupCount()
+       // val gpCount = matcher.groupCount()
         //println("gpCount:$gpCount")
 
 //        val sb = StringBuilder()

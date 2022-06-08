@@ -9,7 +9,6 @@ import com.intellij.openapi.ui.Messages
 
 /**根据dart文件生成数据库配置文件*/
 class SelectTextCreateModel : AnAction() {
-
     override fun actionPerformed(e: AnActionEvent) {
         println("start")
         //工程环境
@@ -30,6 +29,5 @@ class SelectTextCreateModel : AnAction() {
         LogUtil.log("finish==========")
         Messages.showMessageDialog(project, "文件已生成，请到/lib/dbcreate/table下查看", "成功", null)
     }
-
 
 }

@@ -1,6 +1,7 @@
 import com.github.itzhu.dartdbcreateplugin.LogUtil
+import com.github.itzhu.dartdbcreateplugin.tablecreator.ClassInfo
+import com.github.itzhu.dartdbcreateplugin.tablecreator.ColumnInfo
 import com.github.itzhu.dartdbcreateplugin.tablecreator.Creator
-import com.github.itzhu.dartdbcreateplugin.tablecreator.Util
 import java.io.File
 
 object TableCreator {
@@ -81,54 +82,5 @@ object TableCreator {
 
 }
 
-class ClassInfo {
-    var className: String? = null
-    var idColumn: ColumnInfo? = null
-    var columnList = mutableListOf<ColumnInfo>()
-
-    fun addColumn(columnInfo: ColumnInfo) {
-        val dbKey = Util.getDbKey(columnInfo.name)
-        if (dbKey == "ID") {
-            idColumn = columnInfo
-        }
-        columnList.add(columnInfo)
-    }
-
-    override fun toString(): String {
-        return "ClassInfo(className=$className, idColumn=$idColumn, columnList=$columnList)"
-    }
 
 
-}
-
-class ColumnInfo {
-
-    /**注释*/
-    var explain: String
-
-    /**类型*/
-    var type: String
-
-    /**名称*/
-    var name: String
-    var dbName: String
-
-    /**默认值*/
-    var defaultValue: String? = null
-
-    /**是否允许为null*/
-    var notNull = false
-
-    constructor(explain: String, type: String, name: String) {
-        this.explain = explain
-        this.type = type
-        this.name = name
-        this.dbName = Util.getDbKey(name)
-    }
-
-    override fun toString(): String {
-        return "VarargInfo(explain='$explain', type='$type'," +
-                " name='$name', " +
-                "defaultValue=$defaultValue, notNull=$notNull)"
-    }
-}

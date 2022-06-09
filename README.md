@@ -46,7 +46,7 @@ class ClickHistory {
   double tag = 0.0;
 
   ///String 演示
-  String? ramark;
+  String? remark;
 
   ///db-ignore 生成tab时忽略此字段
   String? ignoreKey;
@@ -57,6 +57,7 @@ class ClickHistory {
 ```
 使用CreateDbTable会生成
 ```dart
+
 class ClickHistoryTable extends BaseTable<ClickHistory> {
   static const String TB_NAME = "tb_click_history";
 
@@ -69,32 +70,28 @@ class ClickHistoryTable extends BaseTable<ClickHistory> {
   ///String? lastClickTime;
   static const String LAST_CLICK_TIME = "lastClickTime";
 
-  ///double tag = 0.0;
-  static const String TAG = "tag";
+  ///double dValue = 0.0;
+  static const String D_VALUE = "dValue";
 
-  ///String? ramark;
-  static const String RAMARK = "ramark";
+  ///String? remark;
+  static const String REMARK = "remark";
 
   static String createTableSql() {
     return DbTable.createTable(
-        TB_NAME,
-        [
-          [ID, DbTable.TYPE_INTEGER, DbTable.NOT_NULL],
-          [TIMES, DbTable.TYPE_INTEGER, DbTable.NOT_NULL],
-          //这里的默认值需要后面生成后自己加上
-          [LAST_CLICK_TIME, DbTable.TYPE_TEXT ,DbTable.defaultDateTimeNow()],
-          [TAG, DbTable.TYPE_REAL, DbTable.NOT_NULL],
-          [RAMARK, DbTable.TYPE_TEXT],
-        ],
-        primaryKey: ID,
-        autoIncrement: true);
+            TB_NAME,
+            [
+              [ID, DbTable.TYPE_INTEGER, DbTable.NOT_NULL],
+              [TIMES, DbTable.TYPE_INTEGER, DbTable.NOT_NULL],
+              [LAST_CLICK_TIME, DbTable.TYPE_TEXT],
+              [D_VALUE, DbTable.TYPE_REAL, DbTable.NOT_NULL],
+              [REMARK, DbTable.TYPE_TEXT],
+            ],
+            primaryKey: ID,
+            autoIncrement: true);
   }
 
   @override
   String getIdKey() => ID;
-
-  @override
-  String? getIdValue2String(ClickHistory data) => data.id.toString();
 
   @override
   String getTableName() => TB_NAME;
@@ -105,23 +102,23 @@ class ClickHistoryTable extends BaseTable<ClickHistory> {
     data.id = DbTable.getDataOrNull(map, ID);
     data.times = DbTable.getDataOrNull(map, TIMES);
     data.lastClickTime = DbTable.getDataOrNull(map, LAST_CLICK_TIME);
-    data.tag = DbTable.getDataOrNull(map, TAG);
-    data.ramark = DbTable.getDataOrNull(map, RAMARK);
+    data.dValue = DbTable.getDataOrNull(map, D_VALUE);
+    data.remark = DbTable.getDataOrNull(map, REMARK);
+
     return data;
   }
 
   @override
-  Map<String, Object?> toMap(ClickHistory data) {
+  Map<String, Object?> toMap(ClickHistory data, {bool allowNullValue = false, bool allowId0 = false}) {
     return <String, Object?>{
-      ID: data.id,
-      TIMES: data.times,
-      LAST_CLICK_TIME: data.lastClickTime,
-      TAG: data.tag,
-      RAMARK: data.ramark,
+      if (!allowId0 && data.id > 0) ID: data.id,
+      if (!allowNullValue && data.times != null) TIMES: data.times,
+      if (!allowNullValue && data.lastClickTime != null) LAST_CLICK_TIME: data.lastClickTime,
+      if (!allowNullValue && data.dValue != null) D_VALUE: data.dValue,
+      if (!allowNullValue && data.remark != null) REMARK: data.remark,
     };
   }
 }
-
 
 ```
 
@@ -130,15 +127,16 @@ class ClickHistoryTable extends BaseTable<ClickHistory> {
 示例：
 ```dart
 
+
 ///数据库管理
 class AppDb extends AbsDb {
   ///只支持android\ios\windows
   @override
   Future<String> getDbPath() async {
     if (Platform.isWindows) {
-      return "G:\\aaa\\";
+      return "G:/aaa/";
     } else {
-      return getDatabasesPath();
+      return "${await getDatabasesPath()}/";
     }
   }
 
@@ -170,9 +168,10 @@ class AppDb extends AbsDb {
           return cache[tbName];
       }
     }
-    return null;
+    return tb;
   }
 }
+
 
 
 ```

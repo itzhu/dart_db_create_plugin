@@ -47,17 +47,13 @@ class ReplaceInfo {
     var mapTo: String = ""
 
     /**
-    ID: data.id,
-    TIMES: data.times,
-    LAST_CLICK_TIME: data.lastClickTime,
-    TAG: data.tag,
+    if (!allowId0 && data.id > 0) ID: data.id,
+    if (!allowNullValue && data.times != null) TIMES: data.times,
+    if (!allowNullValue && data.lastClickTime != null) LAST_CLICK_TIME: data.lastClickTime,
+    if (!allowNullValue && data.tag != null) TAG: data.tag,
+    if (!allowNullValue && data.ramark != null) RAMARK: data.ramark,
      * */
     var toMap: String = ""
-
-    /**
-     * id 或 id.toString()
-     * */
-    var idStr: String = ""
 
 
     fun getMap(): MutableMap<String, String> {
@@ -69,7 +65,6 @@ class ReplaceInfo {
         map.put("{--tabSql--}", tabSql)
         map.put("{--mapTo--}", mapTo)
         map.put("{--toMap--}", toMap)
-        map.put("{--idStr--}", idStr)
         return map
     }
 

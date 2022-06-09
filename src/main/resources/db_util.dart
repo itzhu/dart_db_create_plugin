@@ -24,11 +24,11 @@ class DBUtil {
     if (db == null || !db.isOpen) {
       String dbPath = await absDb.getDbPath();
       File file = File(dbPath+absDb.getFileName());
+      print("BaseDb：db path:${file.path}");
       bool exists = await file.exists();
       if (!exists) {
         await file.create(recursive: true);
       }
-      print("BaseDb：db path:${file.path}");
       //https://pub.dev/packages/sqflite_common_ffi
       sqfliteFfiInit();
       var databaseFactory = databaseFactoryFfi;

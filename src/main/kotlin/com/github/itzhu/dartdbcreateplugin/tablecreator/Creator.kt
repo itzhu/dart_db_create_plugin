@@ -94,9 +94,19 @@ object Creator {
             //data.id = DbTable.getDataOrNull(map, ID);
             mapToSb.append(""" data.${info.name} =  DbTable.getDataOrNull(map, ${info.dbName} ); """)
                 .append("\n")
-            //ID: data.id,
-            toMapSb.append(""" ${info.dbName}:data.${info.name}, """)
-                .append("\n")
+
+            //    if (!allowId0 && data.id > 0) ID: data.id,
+            //    if (!allowNullValue && data.times != null) TIMES: data.times,
+            if(info.dbName=="ID"){
+                if(info.type=="int" || info.type=="double"){
+                    toMapSb.append(""" if (!allowId0 && data.${info.name} > 0) ${info.dbName}:data.${info.name},  """)
+                }else{
+                    toMapSb.append(""" if (!allowId0 && data.${info.name}!=null && data.${info.name}?.isNotEmpty==true) ${info.dbName}:data.${info.name},  """)
+                }
+            }else{
+                toMapSb.append("""   if (!allowNullValue && data.${info.name} != null) ${info.dbName}:data.${info.name}, """).append("\n")
+            }
+
 
         }
 
@@ -104,8 +114,6 @@ object Creator {
         replaceInfo.tabSql = tabSqlSb.toString()
         replaceInfo.mapTo = mapToSb.toString()
         replaceInfo.toMap = toMapSb.toString()
-
-        replaceInfo.idStr = "${classInfo.idColumn?.name}" + if (classInfo.idColumn?.type == "int") ".toString()" else ""
 
         replaceInfo.getMap().forEach { key, value ->
             text = text.replace(key, value)

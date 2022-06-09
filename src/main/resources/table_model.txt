@@ -23,9 +23,6 @@ class {--className--}Table extends BaseTable<{--className--}> {
   String getIdKey() => ID;
 
   @override
-  String? getIdValue2String({--className--} data) => data.{--idStr--};
-
-  @override
   String getTableName() => TB_NAME;
 
   @override
@@ -36,7 +33,7 @@ class {--className--}Table extends BaseTable<{--className--}> {
   }
 
   @override
-  Map<String, Object?> toMap({--className--} data) {
+  Map<String, Object?> toMap(ClickHistory data, {bool allowNullValue = false, bool allowId0 = false}) {
     return <String, Object?>{
 		{--toMap--}
     };
